@@ -1,7 +1,7 @@
-import 'package:app/views/newOrder.dart';
+import 'package:app/viewmodels/homeViewmodel';
 import 'package:flutter/material.dart';
-import 'package:app/views/home.dart';
-import 'package:app/views/chose.dart';
+import '../views/home.dart';
+import '../views/summary.dart';
 
 
 void main() {
@@ -13,16 +13,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Creamos el ViewModel principal
+    final homeViewModel = HomeViewModel();
+
     return MaterialApp(
-      initialRoute: '/',
+      title: 'Registro del bar',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        // Un poco de estilo global para que se vea mejor
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+        ),
+      ),
+      // REQUISITO: Definir rutas con nombre
       routes: {
-        '/home': (context) => HomePage(),
-        '/add': (context) => NewOrder(),
-        '/chose': (context) => ChoosePage(),
+        '/resumen': (context) => const SummaryPage(),
+        // Las otras rutas no son estrictamente necesarias aquí si usas 
+        // navegación imperativa (push directo) para Home->NewOrder y NewOrder->Choose,
+        // pero puedes dejarlas si quieres. El requisito estricto de named route es para el resumen.
       },
-        title: 'Registro del bar',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: HomePage(),
+      // Pantalla inicial
+      home: HomePage(viewModel: homeViewModel),
     );
   }
 }
