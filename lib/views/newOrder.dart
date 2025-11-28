@@ -1,3 +1,4 @@
+import 'package:app/views/appColors.dart';
 import 'package:flutter/material.dart';
 import '../viewmodels/newOrderViewmodel.dart';
 import '../models/lineaPedido.dart';
@@ -17,20 +18,33 @@ class _NewOrderState extends State<NewOrder> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: const Text('Crear Nuevo Pedido')),
       body: AnimatedBuilder(
         animation: viewModel,
         builder: (context, child) {
           return Column(
             children: [
-              // --- SECCIÓN MESA ---
+              // --- CAMPO NÚMERO DE MESA ---
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
-                  decoration: const InputDecoration(
-                    labelText: "Mesa o Nombre",
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.table_restaurant),
+                  style: const TextStyle(color: AppColors.neutroClaro),
+                  cursorColor: AppColors.neutroClaro,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.black.withOpacity(0.5),
+                    labelText: "Numero de mesa:",
+                    labelStyle: const TextStyle(color: AppColors.neutroClaro),
+                    prefixIcon: const Icon(Icons.table_restaurant),
+                    prefixIconColor: AppColors.neutroClaro,
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.neutroClaro),
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    ),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: AppColors.neutroClaro, width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    ),
                   ),
                   onChanged: (texto) {
                     viewModel.setMesa(texto);
@@ -38,30 +52,53 @@ class _NewOrderState extends State<NewOrder> {
                 ),
               ),
 
-              // --- SECCIÓN LISTA PROVISIONAL ---
+              // --- LISTA DE PRODUCTOS SELECCIONADOS ---
               Expanded(
                 child: viewModel.lineas.isEmpty
                     ? const Center(
-                        child: Text("No hay productos seleccionados"),
+                        child: Text("No hay productos seleccionados",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.neutroClaro
+                        ),
+                        ),
                       )
                     : ListView.builder(
                         itemCount: viewModel.lineas.length,
                         itemBuilder: (context, index) {
                           final linea = viewModel.lineas[index];
-                          return ListTile(
-                            title: Text(linea.producto.nombre),
-                            subtitle: Text("x${linea.cantidad} un."),
-                            trailing: Text(
-                              "${linea.subtotal.toStringAsFixed(2)} €",
+                          return Card(
+                            color: AppColors.neutroClaro.withAlpha(220),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16.0),
+                              side: const BorderSide(
+                                  color: AppColors.principalOscuro, width: 1),
+                            ),
+                            child: ListTile(
+                              title: Text(linea.producto.nombre,
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      color: AppColors.secundario)),
+                              subtitle: Text("x${linea.cantidad} un.",
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      color: AppColors.neutroOscuro)),
+                              trailing: Text(
+                                "${linea.subtotal.toStringAsFixed(2)} €",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: AppColors.secundario),
+                              ),
                             ),
                           );
                         },
                       ),
               ),
-
               const Divider(thickness: 2),
 
-              // --- TOTAL ACUMULADO ---
+              // --- TOTAL ESTIMADO ---
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16.0,
@@ -72,34 +109,45 @@ class _NewOrderState extends State<NewOrder> {
                   children: [
                     const Text(
                       "Total estimado:",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 18,
+                        color: AppColors.secundarioClaro
+                        ),
                     ),
                     Text(
                       "${viewModel.total.toStringAsFixed(2)} €",
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: AppColors.secundarioClaro
                       ),
                     ),
                   ],
                 ),
               ),
 
-              // --- BOTONERA ---
+              // --- BOTONERA DE ACCIONES ---
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    // Botón 1: Ir a elegir productos
+                    // --- BOTÓN AÑADIR PRODUCTOS ---
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
-                        icon: const Icon(Icons.add_shopping_cart),
-                        label: const Text("Añadir Productos"),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.principalClaro,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 48,
+                              vertical: 16,
+                            )),
+                        icon: const Icon(Icons.add_shopping_cart,
+                            color: AppColors.neutroOscuro),
+                        label: const Text("Añadir Productos",
+                            style: TextStyle(color: AppColors.neutroOscuro)),
                         onPressed: () async {
-                          // REQUISITO: Navegación push esperando resultado
-                          // Nota: Asumimos que ChoosePage devolverá List<LineaPedido>
-                          // (Areglaremos ChoosePage en el siguiente paso)
                           final resultado = await Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -118,14 +166,15 @@ class _NewOrderState extends State<NewOrder> {
                     ),
                     const SizedBox(height: 10),
 
-                    // Botón 2: Ver Resumen (Navegación con nombre)
+                    // --- BOTÓN VER RESUMEN ---
                     SizedBox(
                       width: double.infinity,
-                      child: OutlinedButton(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.principal,
+                        ),
                         onPressed: viewModel.lineas.isNotEmpty
                             ? () {
-                                // REQUISITO: Navegación con rutas nombradas
-                                // Pasamos el pedido actual como argumento
                                 Navigator.pushNamed(
                                   context,
                                   '/resumen',
@@ -135,22 +184,23 @@ class _NewOrderState extends State<NewOrder> {
                             : null,
                         child: const Text(
                           "Ver Resumen",
-                        ), // Desactivado si no hay productos
+                          style: TextStyle(color: AppColors.neutroClaro),
+                        ), 
                       ),
                     ),
                     const SizedBox(height: 20),
 
-                    // Botones Guardar / Cancelar
+                    // --- BOTONES GUARDAR / CANCELAR ---
                     Row(
                       children: [
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey,
+                              backgroundColor: const Color(0xFF41443E),
                             ),
                             child: const Text(
                               "Cancelar",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: AppColors.neutroClaro),
                             ),
                             onPressed: () {
                               // REQUISITO: Pop sin devolver nada
@@ -162,12 +212,10 @@ class _NewOrderState extends State<NewOrder> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
+                              backgroundColor: AppColors.secundario,
                             ),
-                            // REQUISITO: Deshabilitado si no es válido
                             onPressed: viewModel.esValido
                                 ? () {
-                                    // REQUISITO: Pop devolviendo el Pedido completo
                                     Navigator.pop(
                                       context,
                                       viewModel.crearPedidoFinal(),
@@ -176,7 +224,7 @@ class _NewOrderState extends State<NewOrder> {
                                 : null,
                             child: const Text(
                               "Guardar Pedido",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: AppColors.neutroClaro),
                             ),
                           ),
                         ),

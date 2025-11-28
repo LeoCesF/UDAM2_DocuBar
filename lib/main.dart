@@ -1,4 +1,4 @@
-import 'package:app/viewmodels/homeViewmodel';
+import 'package:app/viewmodels/homeViewmodel.dart';
 import 'package:flutter/material.dart';
 import '../views/home.dart';
 import '../views/summary.dart';
@@ -33,8 +33,6 @@ class MyApp extends StatelessWidget {
             image: DecorationImage(
               image: AssetImage('assets/fondo_app.jpg'), 
               fit: BoxFit.cover,
-              // Ajusta este valor entre 0.0 (transparente) y 1.0 (opaco)
-              opacity: 0.8,
             ),
           ),
           child: child,

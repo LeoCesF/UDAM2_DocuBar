@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/pedido.dart';
-import '../models/lineaPedido.dart';
-import '../models/producto.dart';
 import '../data/pedido_data.dart';
 
 class HomeViewModel extends ChangeNotifier {

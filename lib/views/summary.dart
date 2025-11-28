@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import '../models/pedido.dart';
+import 'appColors.dart';
 
 class SummaryPage extends StatelessWidget {
   const SummaryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // RECUPERAR ARGUMENTOS:
-    // Aquí extraemos el objeto Pedido que enviamos desde NewOrder con pushNamed
     final Pedido? pedido = ModalRoute.of(context)?.settings.arguments as Pedido?;
 
-    // Validación de seguridad por si entra sin argumentos
     if (pedido == null) {
       return Scaffold(
         backgroundColor: Colors.transparent,
@@ -21,47 +19,70 @@ class SummaryPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        title: const Text('Resumen Final'),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // CABECERA
+            // --- CABECERA RESUMEN ---
             Card(
-              color: Colors.blue.shade50,
+              color: AppColors.neutroClaro.withAlpha(220),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                side: const BorderSide(color: AppColors.principalOscuro, width: 1),
+              ),
               child: ListTile(
-                leading: const Icon(Icons.receipt_long, size: 40, color: Colors.blue),
+                leading: const Icon(Icons.receipt_long,
+                    size: 40, color: AppColors.secundario),
                 title: Text(
                   "Mesa: ${pedido.mesa}",
-                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.secundario),
                 ),
-                subtitle: Text("Total artículos: ${pedido.totalProductos}"),
+                subtitle: Text("Total artículos: ${pedido.totalProductos}", style: const TextStyle(color: AppColors.neutroOscuro),),
               ),
             ),
             const SizedBox(height: 20),
             
-            const Text("Detalle de productos:", 
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            // --- TÍTULO DETALLE PRODUCTOS ---
+            const Text("Detalle de productos:",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 18,
+                    color: AppColors.secundarioClaro)),
             const Divider(),
 
-            // LISTA DE PRODUCTOS (Solo lectura)
+            // --- LISTA DE PRODUCTOS ---
             Expanded(
               child: ListView.builder(
                 itemCount: pedido.productos.length,
                 itemBuilder: (context, index) {
                   final linea = pedido.productos[index];
-                  return ListTile(
-                    dense: true,
-                    title: Text(linea.producto.nombre, 
-                        style: const TextStyle(fontWeight: FontWeight.w500)),
-                    // Mostramos Cantidad x PrecioUnitario
-                    subtitle: Text("${linea.cantidad} x ${linea.producto.precio.toStringAsFixed(2)} €"),
-                    trailing: Text(
-                      "${linea.subtotal.toStringAsFixed(2)} €",
-                      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                  return Card(
+                    color: AppColors.neutroClaro.withAlpha(220),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                      side: const BorderSide(
+                          color: AppColors.principalOscuro, width: 1),
+                    ),
+                    child: ListTile(
+                      title: Text(linea.producto.nombre,
+                          style: const TextStyle(
+                              fontSize: 20, color: AppColors.secundario)),
+                      subtitle: Text(
+                          "${linea.cantidad} x ${linea.producto.precio.toStringAsFixed(2)} €",
+                          style: const TextStyle(
+                              fontSize: 12, color: AppColors.neutroOscuro)),
+                      trailing: Text(
+                        "${linea.subtotal.toStringAsFixed(2)} €",
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: AppColors.secundario),
+                      ),
                     ),
                   );
                 },
@@ -70,18 +91,24 @@ class SummaryPage extends StatelessWidget {
             
             const Divider(thickness: 2),
 
-            // TOTAL FINAL
-            Container(
-              padding: const EdgeInsets.all(16),
-              color: Colors.grey.shade100,
+            // --- TOTAL FINAL ---
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("TOTAL A PAGAR:", 
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  const Text("TOTAL A PAGAR:",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          fontSize: 18,
+                          color: AppColors.secundarioClaro)),
                   Text(
                     "${pedido.total.toStringAsFixed(2)} €",
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.green),
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.secundarioClaro),
                   ),
                 ],
               ),
@@ -89,13 +116,18 @@ class SummaryPage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // BOTÓN VOLVER
+            // --- BOTÓN VOLVER A EDICIÓN ---
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                child: const Text("Volver a edición"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secundario,
+                ),
+                child: const Text(
+                  "Volver a edición",
+                  style: TextStyle(color: AppColors.neutroClaro),
+                ),
                 onPressed: () {
-                  // REQUISITO: Volver con pop (sin devolver datos ni borrar nada)
                   Navigator.pop(context);
                 },
               ),

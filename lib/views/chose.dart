@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/producto_data.dart';
+import '../views/appColors.dart';
 import '../viewmodels/choseViewmodel.dart';
 
 class ChoosePage extends StatefulWidget {
@@ -16,9 +17,9 @@ class _ChoosePageState extends State<ChoosePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(title: const Text('Carta de Productos')),
       body: Column(
         children: [
+          // --- LISTA DE PRODUCTOS DISPONIBLES ---
           Expanded(
             child: AnimatedBuilder(
               animation: viewModel,
@@ -34,21 +35,21 @@ class _ChoosePageState extends State<ChoosePage> {
 
                     // LÓGICA DE COLORES DEL BORDE
                     Color borderColor = Colors.transparent;
+                    double borderWidth = 0.0;
                     if (isSelected) {
-                      borderColor = Colors.blue; // Azul si lo estás tocando
+                      borderColor = AppColors.secundarioOscuro; 
+                      borderWidth = 3.0;
                     } else if (hasItems) {
-                      borderColor = Colors.green; // Verde si ya tiene productos
+                      borderColor = AppColors.principalOscuro; 
+                      borderWidth = 2.0;
                     }
 
                     return Card(
+                      color: AppColors.neutroClaro.withAlpha(220),
                       elevation: isSelected ? 6 : 2,
-                      // Borde condicional
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(
-                          color: borderColor,
-                          width: (isSelected || hasItems) ? 2.0 : 0.0,
-                        ),
+                        borderRadius: BorderRadius.circular(16.0),
+                        side: BorderSide(color: borderColor, width: borderWidth),
                       ),
                       margin: const EdgeInsets.symmetric(vertical: 6),
                       child: InkWell(
@@ -66,51 +67,49 @@ class _ChoosePageState extends State<ChoosePage> {
                                     Text(
                                       producto.nombre,
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                        // Texto azul si está seleccionado, verde si añadido, negro normal
-                                        color: isSelected 
-                                            ? Colors.blue 
-                                            : (hasItems ? Colors.green[700] : Colors.black),
+                                        fontSize: 20,
+                                        color: isSelected
+                                            ? AppColors.principal
+                                            : AppColors.secundario,
                                       ),
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
                                       "${producto.precio.toStringAsFixed(2)} €",
-                                      style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                                      style: const TextStyle(
+                                          color: AppColors.neutroOscuro, fontSize: 12),
                                     ),
                                   ],
                                 ),
                               ),
 
-                              // --- DERECHA: CONTROLES EN LÍNEA ---
+                              // --- DERECHA: ESTADO DEL PRODUCTO ---
                               if (isSelected)
-                                // ESTADO EDITANDO: Botones en línea
                                 Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[100],
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       IconButton(
                                         iconSize: 20,
-                                        icon: const Icon(Icons.remove, color: Colors.red),
+                                        icon: const Icon(Icons.remove,
+                                            color: AppColors.principalOscuro),
                                         onPressed: () => viewModel.Decrease(producto),
                                         padding: EdgeInsets.zero,
-                                        constraints: const BoxConstraints(), // Hace el botón compacto
+                                        constraints: const BoxConstraints(), 
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
                                         child: Text(
                                           cantidad.toString(),
-                                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: AppColors.neutroOscuro),
                                         ),
                                       ),
                                       IconButton(
                                         iconSize: 20,
-                                        icon: const Icon(Icons.add, color: Colors.green),
+                                        icon: const Icon(Icons.add, color: AppColors.secundario),
                                         onPressed: () => viewModel.Increase(producto),
                                         padding: EdgeInsets.zero,
                                         constraints: const BoxConstraints(),
@@ -119,26 +118,22 @@ class _ChoosePageState extends State<ChoosePage> {
                                   ),
                                 )
                               else if (hasItems)
-                                // ESTADO NO SELECCIONADO PERO CON CANTIDAD: Badge verde
+                                // --- ESTADO: CON CANTIDAD (NO SELECCIONADO) ---
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green.shade100,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(color: Colors.green),
-                                  ),
                                   child: Text(
                                     "$cantidad uds.",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold, 
-                                      color: Colors.green[800],
+                                      color: AppColors.principalOscuro,
                                       fontSize: 14
                                     ),
                                   ),
                                 )
                               else
-                                // ESTADO NEUTRO (Opcional: Icono para invitar a pulsar)
-                                Icon(Icons.add_circle_outline, color: Colors.grey[300]),
+                                // --- ESTADO: NEUTRO (SIN CANTIDAD) ---
+                                const Icon(Icons.touch_app_outlined,
+                                    color: AppColors.secundarioClaro),
                             ],
                           ),
                         ),
@@ -150,27 +145,35 @@ class _ChoosePageState extends State<ChoosePage> {
             ),
           ),
           
-          // BOTONERA INFERIOR (Sin cambios)
+          // --- BOTONERA INFERIOR ---
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.neutroOscuro.withOpacity(0),
               boxShadow: [BoxShadow(blurRadius: 5, color: Colors.black12)],
             ),
             child: Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(padding: const EdgeInsets.all(16)),
-                    child: const Text("Cancelar"),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(16),
+                      backgroundColor: const Color(0xFF41443E),
+                    ),
+                    child: const Text("Cancelar",
+                        style: TextStyle(color: AppColors.neutroClaro)),
                     onPressed: () => Navigator.pop(context),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(16)),
-                    child: const Text("Confirmar selección"),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(16),
+                      backgroundColor: AppColors.secundario,
+                    ),
+                    child: const Text("Confirmar selección",
+                        style: TextStyle(color: AppColors.neutroClaro)),
                     onPressed: () {
                       final seleccion = viewModel.getSelection();
                       Navigator.pop(context, seleccion);

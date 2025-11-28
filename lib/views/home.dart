@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../viewmodels/homeViewmodel';
+import '../viewmodels/homeViewmodel.dart';
 import '../models/pedido.dart';
 import '../views/newOrder.dart';
 import '../views/appColors.dart';
@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.transparent,
       body: Column(
         children: [
+          // --- TÍTULO ---
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
@@ -32,6 +33,8 @@ class _HomePageState extends State<HomePage> {
                 decoration: TextDecoration.underline, 
                 decorationColor: AppColors.secundarioClaro)),
           ),
+
+          // --- LISTA DE PEDIDOS ---
           Expanded(
             child: AnimatedBuilder(
               animation: widget.viewModel,
@@ -45,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     final pedido = widget.viewModel.pedidos[index];
                     return Card(
-                      color: AppColors.neutroClaro.withAlpha(200),
+                      color: AppColors.neutroClaro.withAlpha(220),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         side: const BorderSide(
@@ -61,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                           "Productos: ${pedido.totalProductos}",
                           style: const TextStyle(
                             fontSize: 12, 
-                            color: AppColors.secundario)
+                            color: AppColors.neutroOscuro)
                           ),
                         trailing: Text(
                           "${pedido.total.toStringAsFixed(2)} €", 
@@ -78,17 +81,23 @@ class _HomePageState extends State<HomePage> {
               },
             ),
           ),
+
+          // --- BOTÓN NUEVO PEDIDO ---
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
-              // Aumentamos el padding interno para hacer el botón más grande
               style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.secundario,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 32, // Más ancho
-                  vertical: 16,   // Más alto
-                ),
+                  horizontal: 48, 
+                  vertical: 16,   
+                )),
+              child: Text("Nuevo Pedido",
+              style: TextStyle(
+                color: AppColors.neutroClaro,
+                fontSize: 16
               ),
-              child: const Text("Nuevo Pedido"),
+              ),
               onPressed: () async {
                 final resultado = await Navigator.push(
                   context,

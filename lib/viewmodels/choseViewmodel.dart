@@ -6,7 +6,7 @@ import '../models/lineaPedido.dart';
 class ChooseViewModel extends ChangeNotifier {
   final Map<Producto, int> _cantidades = {};
   
-  // NUEVO: Variable para saber qué producto está seleccionado (foco)
+  // Variable para saber qué producto está seleccionado (foco)
   Producto? _productoSeleccionado;
 
   ChooseViewModel() {
@@ -17,10 +17,10 @@ class ChooseViewModel extends ChangeNotifier {
 
   int getCantidad(Producto p) => _cantidades[p] ?? 0;
 
-  // NUEVO: Getter para saber si un producto específico está seleccionado
+  // Getter para saber si un producto específico está seleccionado
   bool isSelected(Producto p) => _productoSeleccionado == p;
 
-  // NUEVO: Método para cambiar la selección
+  // Método para cambiar la selección
   void SelectProduct(Producto p) {
     if (_productoSeleccionado != p) {
       _productoSeleccionado = p;

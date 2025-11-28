@@ -17,8 +17,8 @@ class PedidoData {
     Pedido(
       mesa: "5",
       productos: [
-        LineaPedido(producto: ProductoData.productos[3], cantidad: 4), // Estrellas
-        LineaPedido(producto: ProductoData.productos[1], cantidad: 1), // Fanta
+        LineaPedido(producto: ProductoData.productos[3], cantidad: 4), 
+        LineaPedido(producto: ProductoData.productos[1], cantidad: 1), 
       ],
     ),
   ];
