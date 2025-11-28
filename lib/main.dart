@@ -13,27 +13,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Creamos el ViewModel principal
     final homeViewModel = HomeViewModel();
 
     return MaterialApp(
       title: 'Registro del bar',
+      // --- TEMA DE LA APLICACIÓN ---
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // Un poco de estilo global para que se vea mejor
-        inputDecorationTheme: const InputDecorationTheme(
-          border: OutlineInputBorder(),
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 20, 18, 4)),
+        useMaterial3: true, 
+        canvasColor: Colors.transparent,
       ),
-      // REQUISITO: Definir rutas con nombre
       routes: {
         '/resumen': (context) => const SummaryPage(),
-        // Las otras rutas no son estrictamente necesarias aquí si usas 
-        // navegación imperativa (push directo) para Home->NewOrder y NewOrder->Choose,
-        // pero puedes dejarlas si quieres. El requisito estricto de named route es para el resumen.
       },
-      // Pantalla inicial
       home: HomePage(viewModel: homeViewModel),
+      builder: (context, child) {
+        return Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/fondo_app.jpg'), 
+              fit: BoxFit.cover,
+              // Ajusta este valor entre 0.0 (transparente) y 1.0 (opaco)
+              opacity: 0.8,
+            ),
+          ),
+          child: child,
+        );
+      },
     );
   }
 }

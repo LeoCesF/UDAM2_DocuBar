@@ -16,6 +16,7 @@ class _NewOrderState extends State<NewOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(title: const Text('Crear Nuevo Pedido')),
       body: AnimatedBuilder(
         animation: viewModel,

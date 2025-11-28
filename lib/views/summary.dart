@@ -13,12 +13,14 @@ class SummaryPage extends StatelessWidget {
     // Validación de seguridad por si entra sin argumentos
     if (pedido == null) {
       return Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(title: const Text("Error")),
         body: const Center(child: Text("No se han cargado datos del pedido")),
       );
     }
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Resumen Final'),
       ),

@@ -4,7 +4,6 @@ import 'producto_data.dart'; // Importamos tus productos
 
 class PedidoData {
   static List<Pedido> pedidosIniciales = [
-
     Pedido(
       mesa: "1",
       productos: [
