@@ -17,10 +17,10 @@ class ChooseViewModel extends ChangeNotifier {
 
   int getCantidad(Producto p) => _cantidades[p] ?? 0;
 
-  // Getter para saber si un producto específico está seleccionado
+  
   bool isSelected(Producto p) => _productoSeleccionado == p;
 
-  // Método para cambiar la selección
+  /// Método para cambiar la selección (Marca dónde ha clicado el usuario y lo resalta en la UI)
   void SelectProduct(Producto p) {
     if (_productoSeleccionado != p) {
       _productoSeleccionado = p;
@@ -41,6 +41,7 @@ class ChooseViewModel extends ChangeNotifier {
     }
   }
 
+  /// Método que recoge todo el pedido (todos los productos seleccionados, más sus cantidades seleccionadas)
   List<LineaPedido> getSelection() {
     List<LineaPedido> seleccion = [];
     _cantidades.forEach((producto, cantidad) {

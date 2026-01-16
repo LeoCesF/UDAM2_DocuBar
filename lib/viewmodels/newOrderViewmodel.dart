@@ -16,7 +16,7 @@ class NewOrderViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Cálculo del total acumulado
+
   double get total {
     double suma = 0;
     for (var linea in lineas) {
@@ -25,7 +25,6 @@ class NewOrderViewModel extends ChangeNotifier {
     return suma;
   }
 
-  // Verificación de que la mesa tenga nombre y productos
   bool get esValido {
     return mesa.isNotEmpty && lineas.isNotEmpty;
   }

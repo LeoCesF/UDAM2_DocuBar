@@ -14,6 +14,8 @@ class NewOrder extends StatefulWidget {
 class _NewOrderState extends State<NewOrder> {
   final NewOrderViewModel viewModel = NewOrderViewModel();
 
+  final snackSave = SnackBar(content: Text("Pedido guardado correctamente"));
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -219,6 +221,9 @@ class _NewOrderState extends State<NewOrder> {
                                     Navigator.pop(
                                       context,
                                       viewModel.crearPedidoFinal(),
+                                      );
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      snackSave,
                                     );
                                   }
                                 : null,

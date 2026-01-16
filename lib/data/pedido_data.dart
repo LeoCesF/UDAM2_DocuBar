@@ -1,6 +1,6 @@
 import '../models/pedido.dart';
 import '../models/lineaPedido.dart';
-import 'producto_data.dart'; // Importamos tus productos
+import 'producto_data.dart'; 
 
 class PedidoData {
   static List<Pedido> pedidosIniciales = [

@@ -9,6 +9,8 @@ class HomeViewModel extends ChangeNotifier {
   HomeViewModel() {
     _cargarDatosIniciales();
   }
+
+  /// Método que carga los datos iniciales que tenemos como data
   void _cargarDatosIniciales() {
     pedidos.addAll(PedidoData.pedidosIniciales);
     notifyListeners();

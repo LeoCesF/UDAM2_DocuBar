@@ -9,7 +9,7 @@ class Pedido {
     required this.productos
     });
 
-  // Calculo total de todo el pedido
+
   double get total {
     double suma = 0;
     for (var linea in productos) {
@@ -18,7 +18,7 @@ class Pedido {
     return suma;
   }
 
-  // Cantidad total de productos 
+
   int get totalProductos {
     int suma = 0;
     for (var linea in productos) {
