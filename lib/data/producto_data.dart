@@ -1,5 +1,6 @@
 import 'package:app/models/producto.dart';
 
+/// Clase con los productos que mostrará la aplicación. Simula lo sería la información de la base de datos / API
 class ProductoData {
   static List<Producto> productos = [
     Producto(nombre: 'Coca-Cola', precio: 2.20),

@@ -4,6 +4,7 @@ import '../models/pedido.dart';
 import '../views/newOrder.dart';
 import '../views/appColors.dart';
 
+/// Vista principal de la aplicación
 class HomePage extends StatefulWidget {
   final HomeViewModel viewModel;
   const HomePage({super.key, required this.viewModel});

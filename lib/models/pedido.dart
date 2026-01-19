@@ -1,5 +1,6 @@
 import 'lineaPedido.dart';
 
+/// Modelo con los datos y métodos de un pedido
 class Pedido {
   final String mesa;
   final List<LineaPedido> productos;
@@ -10,6 +11,7 @@ class Pedido {
     });
 
 
+  /// Método para obtener el total de la orden
   double get total {
     double suma = 0;
     for (var linea in productos) {
@@ -18,7 +20,7 @@ class Pedido {
     return suma;
   }
 
-
+  /// Método para obtener el total de productos en la orden
   int get totalProductos {
     int suma = 0;
     for (var linea in productos) {

@@ -2,6 +2,7 @@ import '../models/pedido.dart';
 import '../models/lineaPedido.dart';
 import 'producto_data.dart'; 
 
+/// Clase con los pedidos iniciales que mostrará la aplicación. Simula lo sería la información de la base de datos / API
 class PedidoData {
   static List<Pedido> pedidosIniciales = [
     Pedido(

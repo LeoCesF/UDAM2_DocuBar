@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+/// Paleta de colores de la aplicación
 class AppColors {
   static const neutroOscuro = Color(0xFF141204);
   static const neutroClaro = Color(0xFFEEEDE7);

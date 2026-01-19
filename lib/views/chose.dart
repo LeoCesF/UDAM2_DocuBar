@@ -3,6 +3,7 @@ import '../data/producto_data.dart';
 import '../views/appColors.dart';
 import '../viewmodels/choseViewmodel.dart';
 
+/// Vista para seleccionar productos
 class ChoosePage extends StatefulWidget {
   const ChoosePage({super.key});
 

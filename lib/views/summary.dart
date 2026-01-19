@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/pedido.dart';
 import 'appColors.dart';
 
+/// Vista para ver el resumen del pedido
 class SummaryPage extends StatelessWidget {
   const SummaryPage({super.key});
 

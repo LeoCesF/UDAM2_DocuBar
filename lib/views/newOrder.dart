@@ -4,6 +4,7 @@ import '../viewmodels/newOrderViewmodel.dart';
 import '../models/lineaPedido.dart';
 import '../views/chose.dart';
 
+/// Vista para crear un nuevo pedido
 class NewOrder extends StatefulWidget {
   const NewOrder({super.key});
 
@@ -14,7 +15,7 @@ class NewOrder extends StatefulWidget {
 class _NewOrderState extends State<NewOrder> {
   final NewOrderViewModel viewModel = NewOrderViewModel();
 
-  final snackSave = SnackBar(content: Text("Pedido guardado correctamente"));
+  final snackSave = SnackBar(content: Text("Pedido guardado correctamente"), backgroundColor: AppColors.secundarioClaro);
 
   @override
   Widget build(BuildContext context) {

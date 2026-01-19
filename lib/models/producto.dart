@@ -1,3 +1,4 @@
+/// Modelo con los datos de un producto
 class Producto {
   final String nombre;
   final double precio;

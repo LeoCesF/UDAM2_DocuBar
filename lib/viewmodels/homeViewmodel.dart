@@ -3,7 +3,7 @@ import '../models/pedido.dart';
 import '../data/pedido_data.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  // Lista de pedidos actuales
+  /// Lista de pedidos actuales
   List<Pedido> pedidos = [];
 
   HomeViewModel() {
@@ -16,6 +16,7 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Método que agrega un pedido a la lista de pedidos
   void agregarPedido(Pedido pedido) {
     pedidos.add(pedido);
     notifyListeners(); 
