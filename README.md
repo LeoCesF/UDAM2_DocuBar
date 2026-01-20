@@ -1,16 +1,16 @@
-# app
+# Gestión de un Bar - App 
 
-A new Flutter project.
+***
 
-## Getting Started
+### App de flutter de gestión de mesas y pedidos de un bar 
 
-This project is a starting point for a Flutter application.
+Se centra en el uso del MVM para organizar el proyecto y el uso de la navegación para moverse entre las distintas vistas
 
-A few resources to get you started if this is your first Flutter project:
+***
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Que encontrarás
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Vista principal con las mesas ocupadas y el número de productos solicitados
+- Vista de creación de pedido para tener el resumen de lo que se va añadiendo
+- Vista con la lista de los productos a añadir
+
