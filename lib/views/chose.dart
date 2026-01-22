@@ -18,7 +18,8 @@ class _ChoosePageState extends State<ChoosePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Column(
+      body: SafeArea(
+        child: Column(
         children: [
           // --- LISTA DE PRODUCTOS DISPONIBLES ---
           Expanded(
@@ -185,6 +186,7 @@ class _ChoosePageState extends State<ChoosePage> {
             ),
           )
         ],
+      ),
       ),
     );
   }

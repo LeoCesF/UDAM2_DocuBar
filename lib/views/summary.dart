@@ -20,7 +20,8 @@ class SummaryPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Padding(
+      body: SafeArea(
+        child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,6 +136,7 @@ class SummaryPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }

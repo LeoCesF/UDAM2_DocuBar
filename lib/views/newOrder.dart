@@ -21,7 +21,8 @@ class _NewOrderState extends State<NewOrder> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: AnimatedBuilder(
+      body: SafeArea(
+        child: AnimatedBuilder(
         animation: viewModel,
         builder: (context, child) {
           return Column(
@@ -174,20 +175,33 @@ class _NewOrderState extends State<NewOrder> {
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.principal,
+                          backgroundColor: viewModel.lineas.isNotEmpty
+                              ? AppColors.principal
+                              : Colors.grey.withOpacity(0.5),
                         ),
-                        onPressed: viewModel.lineas.isNotEmpty
-                            ? () {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/resumen',
-                                  arguments: viewModel.crearPedidoFinal(),
-                                );
-                              }
-                            : null,
-                        child: const Text(
+                        onPressed: () {
+                          if (viewModel.lineas.isNotEmpty) {
+                            Navigator.pushNamed(
+                              context,
+                              '/resumen',
+                              arguments: viewModel.crearPedidoFinal(),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Para ver un resumen primero es necesario añadir productos"),
+                                backgroundColor: AppColors.principal,
+                              ),
+                            );
+                          }
+                        },
+                        child: Text(
                           "Ver Resumen",
-                          style: TextStyle(color: AppColors.neutroClaro),
+                          style: TextStyle(
+                            color: viewModel.lineas.isNotEmpty
+                                ? AppColors.neutroClaro
+                                : AppColors.neutroClaro.withOpacity(0.5),
+                          ),
                         ), 
                       ),
                     ),
@@ -215,22 +229,35 @@ class _NewOrderState extends State<NewOrder> {
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.secundario,
+                              backgroundColor: viewModel.esValido
+                                  ? AppColors.secundario
+                                  : Colors.grey.withOpacity(0.5),
                             ),
-                            onPressed: viewModel.esValido
-                                ? () {
-                                    Navigator.pop(
-                                      context,
-                                      viewModel.crearPedidoFinal(),
-                                      );
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      snackSave,
-                                    );
-                                  }
-                                : null,
-                            child: const Text(
+                            onPressed: () {
+                              if (viewModel.esValido) {
+                                Navigator.pop(
+                                  context,
+                                  viewModel.crearPedidoFinal(),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  snackSave,
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Para guardar un pedido debes asignar un numero de mesa y pedidos"),
+                                    backgroundColor: AppColors.principal,
+                                  ),
+                                );
+                              }
+                            },
+                            child: Text(
                               "Guardar Pedido",
-                              style: TextStyle(color: AppColors.neutroClaro),
+                              style: TextStyle(
+                                color: viewModel.esValido
+                                    ? AppColors.neutroClaro
+                                    : AppColors.neutroClaro.withOpacity(0.5),
+                              ),
                             ),
                           ),
                         ),
@@ -242,6 +269,7 @@ class _NewOrderState extends State<NewOrder> {
             ],
           );
         },
+      ),
       ),
     );
   }

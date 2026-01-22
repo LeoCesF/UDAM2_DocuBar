@@ -18,7 +18,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Column(
+      body: SafeArea(
+        child: Column(
         children: [
           // --- TÍTULO ---
           const Padding(
@@ -113,6 +114,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),   
         ],
+      ),
       ),
     );
   }
